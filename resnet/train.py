@@ -49,7 +49,7 @@ parser.add_argument('--momentum', type=float, default=0.9)
 ##  model
 parser.add_argument('--model_name', type=str, default='VGG')
 ##  show
-parser.add_argument('--show_step', type=int, default=20020)
+parser.add_argument('--show_step', type=int, default=500)
 ##  GPU'
 parser.add_argument('--gpu', type=str, default='0,1,2,3,4,5,6,7')
 
@@ -98,7 +98,7 @@ if __name__ == '__main__':
         MyDataLoader = torch.utils.data.DataLoader(dataset=MyData, batch_size=args.batch_size,shuffle=True, num_workers=args.num_workers)
         ##  model
         model = model(args).cuda()
-     #   model = nn.DataParallel(model, device_ids=[0,1])
+        model = nn.DataParallel(model, device_ids=[0,1,2,3,4,5,6,7])
         model.train()
         #model.load_state_dict(]torch.load('logs/VGG7.pth.tar'))
         ##  optimizer 
@@ -155,13 +155,13 @@ if __name__ == '__main__':
                 loss_epoch_2.updata(loss_5.data, 1)
                 loss_epoch_3.updata(loss_6.data, 1)
                 loss_epoch_4.updata(loss_7.data, 1)
-                loss_epoch_5.updata(loss_8.data, 1)
+                loss_epoch_5.updata(loss_8.data, 1
                 if (step+1) % args.show_step == 0 :
                     print('Epoch:[{}/{}]\tstep:[{}/{}]   loss_epoch_1:{:.3f}\tloss_epoch_2:{:.3f}\tloss_epoch_3:{:.3f}\tloss_epoch_4:{:.3f}\tloss_epoch_5:{:.3f}\tepoch_acc_1:{:.2f}%'.format(
                             epoch+1, args.epochs, step+1, len(MyDataLoader), loss_epoch_1.avg,loss_epoch_2.avg, loss_epoch_3.avg, loss_epoch_4.avg,loss_epoch_5.avg,cls_acc_1.avg
                     ))
                     
-                if (step+1) % args.show_step == 0:
+                if (step+1) % 20020 == 0:
                     iter = int(step // args.show_step)
                     torch.save(model.state_dict(), os.path.join(args.save_path, args.model_name + str(epoch)+'_'+ str(iter) +'.pth.tar'))
 
