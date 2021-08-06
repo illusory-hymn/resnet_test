@@ -103,6 +103,8 @@ class ResNetCam(nn.Module):
     def forward(self, x, label=None, return_cam=False):
         classifier_cls_copy = copy.deepcopy(self.classifier_cls)
         layer4_copy = copy.deepcopy(self.layer4)
+        layer4_copy.requires_grad_ = False
+        classifier_cls_copy.requires_grad_ = False
 
         x = self.conv1(x)
         x = self.bn1(x)
