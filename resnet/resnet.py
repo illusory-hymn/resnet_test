@@ -309,7 +309,7 @@ def get_downsampling_layer(inplanes, block, planes, stride):
             nn.Conv2d(inplanes, outplanes, 1, stride, bias=False),
             nn.BatchNorm2d(outplanes),
         )
-
+ 
 def load_pretrained_model(model):
     strict_rule = True
 

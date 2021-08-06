@@ -92,13 +92,14 @@ if __name__ == '__main__':
     print(torch.cuda.is_available())
     print(torch.version.cuda)'''
     print(torch.cuda.get_device_name(0))
-    if args.phase == 'train':
+    if args.phase == 'train': 
         ##  data
         MyData = ImageDataset(args)
         MyDataLoader = torch.utils.data.DataLoader(dataset=MyData, batch_size=args.batch_size,shuffle=True, num_workers=args.num_workers)
         ##  model
         model = model(args).cuda()
         model = nn.DataParallel(model, device_ids=[0,1,2,3,4,5,6,7])
+        model = model.module
         model.train()
         #model.load_state_dict(]torch.load('logs/VGG7.pth.tar'))
         ##  optimizer 
@@ -113,7 +114,7 @@ if __name__ == '__main__':
         param_branch = []
 
         print('Train begining!')
-        for epoch in range(0, args.epochs):
+        for epoch in range(0, args.epochs): 
             ##  accuracy
             cls_acc_1 = AverageMeter()
             cls_acc_2 = AverageMeter()
