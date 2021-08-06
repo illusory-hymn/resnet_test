@@ -318,7 +318,7 @@ def load_pretrained_model(model):
     state_dict = remove_layer(state_dict, 'fc')
     strict_rule = False
 
-    model.load_state_dict(state_dict, strict=strict_rule)
+    model.module.load_state_dict(state_dict, strict=strict_rule)
     return model
 
 
