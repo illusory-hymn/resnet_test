@@ -130,9 +130,8 @@ class ResNetCam(nn.Module):
         self.feature_map = x
         batch, channel, h, w = x_4.size()
         self.x_sum = torch.zeros(batch, 1, h, w).cuda()
-        if label !=None:
-            for i in range(batch):
-                self.x_sum[i][0] = x[i][label[i]]
+        for i in range(batch):
+            self.x_sum[i][0] = x[i][label[i]]
 
         self.score_1 = self.avgpool(x).squeeze(-1).squeeze(-1)
 
@@ -146,9 +145,8 @@ class ResNetCam(nn.Module):
         x_erase = classifier_cls_copy(x_erase)
 
         self.x_erase_sum = torch.zeros(batch, 1, h, w).cuda()
-        if label !=None:
-            for i in range(batch):
-                self.x_erase_sum[i][0] = x_erase[i][label[i]]
+        for i in range(batch):
+            self.x_erase_sum[i][0] = x_erase[i][label[i]]
 
 ## x_3_atten
         #x_3 = self.classifier_loc[0](x_3)
