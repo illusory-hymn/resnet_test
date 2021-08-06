@@ -99,13 +99,11 @@ class ResNetCam(nn.Module):
             nn.Sigmoid(),
         )  
         initialize_weights(self.modules(), init_mode='xavier')
+        self.classifier_cls_copy = copy.deepcopy(self.classifier_cls)
+        self.layer4_copy = copy.deepcopy(self.layer4)
 
     def forward(self, x, label=None, return_cam=False):
-        classifier_cls_copy = copy.deepcopy(self.classifier_cls)
-        layer4_copy = copy.deepcopy(self.layer4)
-        layer4_copy.requires_grad_ = False
-        classifier_cls_copy.requires_grad_ = False
-
+        
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)
@@ -142,9 +140,9 @@ class ResNetCam(nn.Module):
         x_erase = x_3.detach() * x_saliency_erase
         #self.show_func(x_erase)
         x_erase = F.max_pool2d(x_erase, kernel_size=2)
-        x_erase = layer4_copy(x_erase)
+        x_erase = self.layer4_copy(x_erase)
         #self.show_func(x_erase)
-        x_erase = classifier_cls_copy(x_erase)
+        x_erase = self.classifier_cls_copy(x_erase)
 
         self.x_erase_sum = torch.zeros(batch, 1, h, w).cuda()
         for i in range(batch):
