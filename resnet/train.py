@@ -49,7 +49,7 @@ parser.add_argument('--momentum', type=float, default=0.9)
 ##  model
 parser.add_argument('--model_name', type=str, default='VGG')
 ##  show
-parser.add_argument('--show_step', type=int, default=94)
+parser.add_argument('--show_step', type=int, default=20020)
 ##  GPU'
 parser.add_argument('--gpu', type=str, default='0,1,2,3,4,5,6,7')
 
@@ -161,9 +161,15 @@ if __name__ == '__main__':
                             epoch+1, args.epochs, step+1, len(MyDataLoader), loss_epoch_1.avg,loss_epoch_2.avg, loss_epoch_3.avg, loss_epoch_4.avg,loss_epoch_5.avg,cls_acc_1.avg
                     ))
                     
-                if step % 188 == 0:
-                    iter = int(step // 188)
-                    torch.save(model.state_dict(), os.path.join(args.save_path, args.model_name + str(epoch)+'_'+ str(iter) +'.pth.tar'),_use_new_zipfile_serialization=False)
+                if (step+1) % args.show_step == 0:
+                    iter = int(step // args.show_step)
+                    torch.save(model.state_dict(), os.path.join(args.save_path, args.model_name + str(epoch)+'_'+ str(iter) +'.pth.tar'))
+
+            ## 一个epoch训练完        
+            print('Epoch:[{}/{}]\tstep:[{}/{}]   loss_epoch_1:{:.3f}\tloss_epoch_2:{:.3f}\tloss_epoch_3:{:.3f}\tloss_epoch_4:{:.3f}\tloss_epoch_5:{:.3f}\tepoch_acc_1:{:.2f}%'.format(
+                            epoch+1, args.epochs, 40037, len(MyDataLoader), loss_epoch_1.avg,loss_epoch_2.avg, loss_epoch_3.avg, loss_epoch_4.avg,loss_epoch_5.avg,cls_acc_1.avg
+                    ))
+            torch.save(model.state_dict(), os.path.join(args.save_path, args.model_name + str(epoch)+'_'+ str(2) +'.pth.tar'))
              #   torch.cuda.synchronize()
              #   end = time.time()
              #   print(end-start) 
