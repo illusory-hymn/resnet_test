@@ -134,6 +134,8 @@ if __name__ == '__main__':
                 imgs, label = Variable(imgs).cuda(), label.cuda()
                 ##  backward
                 optimizer.zero_grad()
+                print(imgs)
+                print(label)
                 output1= model(imgs, label)
                 label = label.long()
                 pred = torch.max(output1, 1)[1]  
