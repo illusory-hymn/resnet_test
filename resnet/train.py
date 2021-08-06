@@ -23,7 +23,7 @@ torch.backends.cudnn.benchmark = False
  
 parser = argparse.ArgumentParser()
 ##  path
-parser.add_argument('--root', type=str, default='./')
+parser.add_argument('--root', type=str, default='/sdd/imagenet-1k')
 parser.add_argument('--test_gt_path', type=str, default='val_gt.txt')
 parser.add_argument('--num_classes', type=int, default=1000)
 parser.add_argument('--test_txt_path', type=str, default='val_list.txt')
@@ -35,7 +35,7 @@ parser.add_argument('--crop_size', type=int, default=224)
 parser.add_argument('--resize_size', type=int, default=256) 
 parser.add_argument('--tencrop', default=False) ## True / False
 ##  dataloader
-parser.add_argument('--num_workers', type=int, default=1)
+parser.add_argument('--num_workers', type=int, default=16)
 parser.add_argument('--nest', action='store_true')
 ##  train
 parser.add_argument('--batch_size', type=int, default=32)
@@ -51,7 +51,7 @@ parser.add_argument('--model_name', type=str, default='VGG')
 ##  show
 parser.add_argument('--show_step', type=int, default=94)
 ##  GPU'
-parser.add_argument('--gpu', type=str, default='0')
+parser.add_argument('--gpu', type=str, default='0,1,2,3,4,5,6,7')
 
 args = parser.parse_args()
 os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
