@@ -155,8 +155,8 @@ if __name__ == '__main__':
                 loss_epoch_2.updata(loss_5.data, 1)
                 loss_epoch_3.updata(loss_6.data, 1)
                 loss_epoch_4.updata(loss_7.data, 1)
-                loss_epoch_5.updata(loss_8.data, 1
-                if (step+1) % args.show_step == 0 :
+                loss_epoch_5.updata(loss_8.data, 1)
+                if (step+1) % args.show_step == 0:
                     print('Epoch:[{}/{}]\tstep:[{}/{}]   loss_epoch_1:{:.3f}\tloss_epoch_2:{:.3f}\tloss_epoch_3:{:.3f}\tloss_epoch_4:{:.3f}\tloss_epoch_5:{:.3f}\tepoch_acc_1:{:.2f}%'.format(
                             epoch+1, args.epochs, step+1, len(MyDataLoader), loss_epoch_1.avg,loss_epoch_2.avg, loss_epoch_3.avg, loss_epoch_4.avg,loss_epoch_5.avg,cls_acc_1.avg
                     ))
